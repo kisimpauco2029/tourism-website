@@ -264,3 +264,25 @@ body {
     text-align: center;
   }
 }
+/* Reference Links Styling */
+.reference-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.reference-links li {
+  margin-bottom: 0.5rem;
+}
+
+.reference-links a {
+  color: #f7a233;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.reference-links a:hover {
+  color: #d17a00;
+  text-decoration: underline;
+}

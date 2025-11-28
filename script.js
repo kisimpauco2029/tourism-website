@@ -1,33 +1,39 @@
-// Accordion-style dropdown toggle
-document.querySelectorAll(".nav-button").forEach(button => {
-  button.addEventListener("click", () => {
-    const pageId = button.id.replace("-btn", "");
-    const section = document.getElementById(pageId + "-content");
+let currentSection = "attractions";
 
-    // Collapse other sections
-    document.querySelectorAll(".content-section").forEach(s => {
-      if (s !== section) s.classList.remove("active");
-    });
-    document.querySelectorAll(".nav-button").forEach(b => {
-      if (b !== button) b.classList.remove("active");
-    });
+function togglePage(pageId) {
+    const allSections = document.querySelectorAll(".content-section");
+    const allButtons = document.querySelectorAll(".nav-button");
 
-    // Toggle current section
-    section.classList.toggle("active");
-    button.classList.toggle("active");
+    if (currentSection !== pageId) {
+        const previousSection = document.getElementById(currentSection + "-content");
+        const previousButton = document.getElementById(currentSection + "-btn");
+        previousSection.classList.remove("active");
+        previousButton.classList.remove("active");
 
-    // Animate cards if opened
-    if (section.classList.contains("active")) {
-      const cards = section.querySelectorAll(".content-card");
-      cards.forEach((card, index) => {
+        const selectedSection = document.getElementById(pageId + "-content");
+        const selectedButton = document.getElementById(pageId + "-btn");
+        selectedSection.classList.add("active");
+        selectedButton.classList.add("active");
+
+        const cards = selectedSection.querySelectorAll(".content-card");
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.15}s`;
+            card.classList.add("active");
+        });
+
+        currentSection = pageId;
+    }
+}
+
+window.onload = () => {
+    const defaultButton = document.getElementById(currentSection + "-btn");
+    const defaultSection = document.getElementById(currentSection + "-content");
+    defaultSection.classList.add("active");
+    defaultButton.classList.add("active");
+
+    const cards = defaultSection.querySelectorAll(".content-card");
+    cards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.15}s`;
         card.classList.add("active");
-      });
-    }
-  });
-});
-
-// Show Attractions by default
-window.onload = () => {
-  document.getElementById("attractions-btn").click();
+    });
 };

@@ -1,38 +1,32 @@
-let currentSection = "attractions"; // default
+let currentSection = "attractions"; // default open section
 
 function togglePage(pageId) {
-    if (currentSection === pageId) return; // do nothing if the same button is clicked
+    const allSections = document.querySelectorAll(".content-section");
+    const allButtons = document.querySelectorAll(".nav-button");
 
-    const previousSection = document.getElementById(currentSection + "-content");
-    const previousButton = document.getElementById(currentSection + "-btn");
-    previousSection.classList.remove("active");
-    previousButton.classList.remove("active");
+    if (currentSection !== pageId) {
+        // Close previous
+        document.getElementById(currentSection + "-content").classList.remove("active");
+        document.getElementById(currentSection + "-btn").classList.remove("active");
 
-    const newSection = document.getElementById(pageId + "-content");
-    const newButton = document.getElementById(pageId + "-btn");
-    newSection.classList.add("active");
-    newButton.classList.add("active");
+        // Open selected
+        const selectedSection = document.getElementById(pageId + "-content");
+        const selectedButton = document.getElementById(pageId + "-btn");
+        selectedSection.classList.add("active");
+        selectedButton.classList.add("active");
 
-    // Animate content cards
-    const cards = newSection.querySelectorAll(".content-card");
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.15}s`;
-        card.classList.add("active");
-    });
+        // Animate content cards if any
+        const cards = selectedSection.querySelectorAll(".content-card");
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.15}s`;
+            card.classList.add("active");
+        });
 
-    currentSection = pageId;
+        currentSection = pageId;
+    }
 }
 
 // Show default section on load
 window.onload = () => {
-    const defaultButton = document.getElementById(currentSection + "-btn");
-    const defaultSection = document.getElementById(currentSection + "-content");
-    defaultSection.classList.add("active");
-    defaultButton.classList.add("active");
-
-    const cards = defaultSection.querySelectorAll(".content-card");
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.15}s`;
-        card.classList.add("active");
-    });
+    togglePage(currentSection);
 };

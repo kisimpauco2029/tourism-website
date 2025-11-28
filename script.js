@@ -1,30 +1,29 @@
-let currentSection = "attractions";
+let currentSection = "attractions"; // default
 
 function togglePage(pageId) {
-    const allSections = document.querySelectorAll(".content-section");
-    const allButtons = document.querySelectorAll(".nav-button");
+    if (currentSection === pageId) return; // do nothing if the same button is clicked
 
-    if (currentSection !== pageId) {
-        const previousSection = document.getElementById(currentSection + "-content");
-        const previousButton = document.getElementById(currentSection + "-btn");
-        previousSection.classList.remove("active");
-        previousButton.classList.remove("active");
+    const previousSection = document.getElementById(currentSection + "-content");
+    const previousButton = document.getElementById(currentSection + "-btn");
+    previousSection.classList.remove("active");
+    previousButton.classList.remove("active");
 
-        const selectedSection = document.getElementById(pageId + "-content");
-        const selectedButton = document.getElementById(pageId + "-btn");
-        selectedSection.classList.add("active");
-        selectedButton.classList.add("active");
+    const newSection = document.getElementById(pageId + "-content");
+    const newButton = document.getElementById(pageId + "-btn");
+    newSection.classList.add("active");
+    newButton.classList.add("active");
 
-        const cards = selectedSection.querySelectorAll(".content-card");
-        cards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.15}s`;
-            card.classList.add("active");
-        });
+    // Animate content cards
+    const cards = newSection.querySelectorAll(".content-card");
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.15}s`;
+        card.classList.add("active");
+    });
 
-        currentSection = pageId;
-    }
+    currentSection = pageId;
 }
 
+// Show default section on load
 window.onload = () => {
     const defaultButton = document.getElementById(currentSection + "-btn");
     const defaultSection = document.getElementById(currentSection + "-content");

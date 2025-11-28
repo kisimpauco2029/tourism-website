@@ -1,32 +1,31 @@
-let currentSection = "attractions"; // default open section
+let currentSection = "attractions"; // default section
 
 function togglePage(pageId) {
-    const allSections = document.querySelectorAll(".content-section");
-    const allButtons = document.querySelectorAll(".nav-button");
+    if (currentSection === pageId) return; // do nothing if same button clicked
 
-    if (currentSection !== pageId) {
-        // Close previous
-        document.getElementById(currentSection + "-content").classList.remove("active");
-        document.getElementById(currentSection + "-btn").classList.remove("active");
+    // Close previous
+    const prevSection = document.getElementById(currentSection + "-content");
+    const prevButton = document.getElementById(currentSection + "-btn");
+    if (prevSection) prevSection.classList.remove("active");
+    if (prevButton) prevButton.classList.remove("active");
 
-        // Open selected
-        const selectedSection = document.getElementById(pageId + "-content");
-        const selectedButton = document.getElementById(pageId + "-btn");
-        selectedSection.classList.add("active");
-        selectedButton.classList.add("active");
+    // Open selected
+    const newSection = document.getElementById(pageId + "-content");
+    const newButton = document.getElementById(pageId + "-btn");
+    if (newSection) newSection.classList.add("active");
+    if (newButton) newButton.classList.add("active");
 
-        // Animate content cards if any
-        const cards = selectedSection.querySelectorAll(".content-card");
+    // Animate cards
+    if (newSection) {
+        const cards = newSection.querySelectorAll(".content-card");
         cards.forEach((card, index) => {
             card.style.animationDelay = `${index * 0.15}s`;
             card.classList.add("active");
         });
-
-        currentSection = pageId;
     }
+
+    currentSection = pageId;
 }
 
-// Show default section on load
-window.onload = () => {
-    togglePage(currentSection);
-};
+// Show default section on page load
+window.onload = () => togglePage(currentSection);

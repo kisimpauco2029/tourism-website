@@ -3,13 +3,20 @@ let currentSection = "attractions"; // default section
 function togglePage(pageId) {
     if (currentSection === pageId) return; // do nothing if same button clicked
 
-    // Close previous
+    // Close previous section
     const prevSection = document.getElementById(currentSection + "-content");
     const prevButton = document.getElementById(currentSection + "-btn");
-    if (prevSection) prevSection.classList.remove("active");
+    if (prevSection) {
+        prevSection.classList.remove("active");
+        // Remove active from cards
+        prevSection.querySelectorAll(".content-card").forEach(card => {
+            card.classList.remove("active");
+            card.style.animationDelay = "0s";
+        });
+    }
     if (prevButton) prevButton.classList.remove("active");
 
-    // Open selected
+    // Open new section
     const newSection = document.getElementById(pageId + "-content");
     const newButton = document.getElementById(pageId + "-btn");
     if (newSection) newSection.classList.add("active");
